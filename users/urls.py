@@ -3,5 +3,6 @@ from users import views
 
 
 urlpatterns = [
-    path('', views.SignupView.as_view(), name='signupview')
+    path('signup/', views.SignupView.as_view(), name='signupview'),
+    path('login/', views.CustomToekonObtainPairView.as_view(), name='signupview')
 ]
