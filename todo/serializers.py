@@ -12,13 +12,10 @@ class TodoSerializer(serializers.ModelSerializer):
         model = TodoArticle
         fields = '__all__'
 
-
 class TodoCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = TodoArticle
         fields = ("title", )
-
-
 
 class TodoListSerializer(serializers.ModelSerializer):
     user = serializers.SerializerMethodField()
