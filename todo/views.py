@@ -7,7 +7,8 @@ from rest_framework.response import Response
 from rest_framework.generics import get_object_or_404
 from todo.serializers import TodoSerializer, TodoCreateSerializer,TodoListSerializer
 import datetime 
-
+from django.views.defaults import permission_denied
+from django.http import Http404
 
 
 class TodoListView(APIView):
@@ -41,13 +42,9 @@ class TodoDetailView(APIView):
         else:
             return Response("권한이 없습니다", status=status.HTTP_403_FORBIDDEN)
     def delete(self, request, id):
-        article = get_object_or_404(TodoArticle, id=id)
-        if request.user == article.user:
-            article.delete()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
-            return Response("권한이 없습니다", status=status.HTTP_403_FORBIDDEN)
-
+        article = get_object_or_404(TodoArticle, id=id, user=request.user.id)
+        article.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 class TodoCompleteView(APIView):
     permission_classes = [permissions.IsAuthenticated]
