@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import User
+from django.urls import reverse
 
 # Create your models here.
 class TodoArticle(models.Model):
@@ -11,3 +12,6 @@ class TodoArticle(models.Model):
     completion_at = models.DateTimeField(null=True, default=None, blank=True)
     def __str__(self):
         return str(self.title)
+
+    def get_absolute_url(self):
+        return reverse('tododetailview', kwargs={"id":self.id})

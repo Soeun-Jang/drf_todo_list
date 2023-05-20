@@ -19,13 +19,15 @@ class TodoListView(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request):
+        # if not request.user.is_authenticated:
+        #     return Response({"message":"로그인 해주세요"}, 400)
         serializer = TodoCreateSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class TodoDetailView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     def get(self, request, id):
         article = get_object_or_404(TodoArticle, id=id)
         serializer = TodoSerializer(article)

@@ -10,7 +10,8 @@ class TodoSerializer(serializers.ModelSerializer):
         return obj.user.email
     class Meta:
         model = TodoArticle
-        fields = '__all__'
+        fields = ('id', 'user', 'title', 'is_complete', 'created_at', 'updated_at')
+
 
 class TodoCreateSerializer(serializers.ModelSerializer):
     class Meta:

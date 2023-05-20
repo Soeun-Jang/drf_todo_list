@@ -11,9 +11,13 @@ class UserManager(BaseUserManager):
         
         if not email:
           raise ValueError("회원가입 시 이메일이 필요합니다.")
+        
+        username = kwargs.pop('username', '')  # username을 kwargs에서 가져옴
+
         user = self.model(
           email=self.normalize_email(email),
-          **kwargs
+          username=username,
+          **kwargs,
         )
         user.set_password(password)
         user.save(using=self._db)
